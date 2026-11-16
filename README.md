@@ -98,7 +98,28 @@ The SQLite database contains:
 - `pending_transactions`: raw and decoded provider-visible transactions;
 - `pending_scenarios`: counterfactual prices, decisions and limitations.
 
-SQLite uses WAL mode so notebooks can read while the monitor writes. `notebooks/01_profitability_analysis.ipynb` is a starter analysis.
+SQLite uses WAL mode so notebooks can read while the monitor writes.
+
+## Analysis notebooks
+
+The notebooks locate the repository and open SQLite in read-only mode, so they work when Jupyter is launched from either the repository root or `notebooks/`. Set `ARB_DB_PATH` to analyse a different database.
+
+- `01_profitability_analysis.ipynb` covers data quality, CEX–DEX basis, optimal size, opportunity frequency, itemized costs, break-even price differences and paper-session P&L.
+- `02_latency_survival.ipynb` compares requested with actual delay, estimates survival/profit decay and attributes changes separately to the Binance and Uniswap legs.
+- `03_pending_scenarios.ipynb` reports the collection/decoding funnel, scenario validity, conditional candidates and recorded limitations. When no pending data exists, it still runs a labelled DEX-shock sensitivity experiment against stored market observations; that experiment is diagnostic, not a mempool forecast.
+
+Start Jupyter with:
+
+```bash
+source .venv/bin/activate
+jupyter lab
+```
+
+The generated notebook sources can be reproduced after editing `scripts/build_notebooks.py`:
+
+```bash
+python scripts/build_notebooks.py
+```
 
 ## Pending-transaction limitations
 
@@ -132,7 +153,8 @@ scr/
     storage.py          SQLite research schema
     paper.py            optional hypothetical inventory ledger
 tests/                  offline deterministic tests
-notebooks/              reproducible analysis starters
+notebooks/              detailed reproducible research analyses
+scripts/                reproducible notebook builder
 ```
 
 ## Safety
