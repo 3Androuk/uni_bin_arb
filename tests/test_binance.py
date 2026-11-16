@@ -3,8 +3,8 @@ from decimal import Decimal
 
 import pytest
 
-from scr.data.binance import calculate_buy_cost, calculate_sell_proceeds, walk_order_book
-from scr.app.models import OrderBook
+from src.data.binance import calculate_buy_cost, calculate_sell_proceeds, walk_order_book
+from src.app.models import OrderBook
 
 
 def book():

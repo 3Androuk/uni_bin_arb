@@ -54,25 +54,25 @@ Put an Ethereum mainnet HTTP endpoint in `.env`. Add an Alchemy WebSocket endpoi
 python -m pytest
 
 # One live, stored observation
-python -m scr --config config.toml once
+python -m src --config config.toml once
 
 # Poll until interrupted; every sample and candidate goes to SQLite
-python -m scr --config config.toml monitor
+python -m src --config config.toml monitor
 
 # Paper trading: simulate fills and update a session inventory ledger
-python -m scr --config config.toml paper
+python -m src --config config.toml paper
 
 # A bounded smoke run
-python -m scr --config config.toml monitor --iterations 2
+python -m src --config config.toml monitor --iterations 2
 
 # Dataset counts
-python -m scr --config config.toml summary
+python -m src --config config.toml summary
 
 # Optional, high-volume experimental collector
-python -m scr --config config.toml pending
+python -m src --config config.toml pending
 ```
 
-`python scr/app/main.py ...` is also supported. Installing the repository with `python -m pip install -e .` additionally creates the `uni-bin-arb` command.
+`python src/app/main.py ...` is also supported. Installing the repository with `python -m pip install -e .` additionally creates the `uni-bin-arb` command.
 
 ## Configuration and cost model
 
@@ -128,12 +128,6 @@ source .venv/bin/activate
 jupyter lab
 ```
 
-The generated notebook sources can be reproduced after editing `scripts/build_notebooks.py`:
-
-```bash
-python scripts/build_notebooks.py
-```
-
 ## Latency limitations and required expansion
 
 The present latency evaluation is an initial observation-based approximation, not a complete execution-latency model. A selected opportunity is repriced at the first monitor observation after each configured delay. With the default five-second polling interval, short requested horizons can therefore be measured several seconds late. The stored result indicates whether a comparable quote was still profitable, but it does not prove that both legs could have been submitted and filled at those prices.
@@ -166,7 +160,7 @@ For research-grade stateful counterfactuals, replay selected transactions on an 
 ## Project layout
 
 ```text
-scr/
+src/
   data/
     binance.py          public depth + optional read-only fee lookup
     uniswap.py          pool state + QuoterV2 calls
@@ -183,7 +177,6 @@ scr/
     paper.py            optional hypothetical inventory ledger
 tests/                  offline deterministic tests
 notebooks/              detailed reproducible research analyses
-scripts/                reproducible notebook builder
 ```
 
 ## Safety

@@ -1,10 +1,10 @@
 from datetime import datetime, timezone
 from decimal import Decimal
 
-from scr.arb.gas import FixedGasModel
-from scr.arb.optimizer import BidirectionalOptimizer, build_quantity_grid
-from scr.app.config import StrategyConfig
-from scr.app.models import Direction, Inventory, OrderBook, SwapQuote
+from src.arb.gas import FixedGasModel
+from src.arb.optimizer import BidirectionalOptimizer, build_quantity_grid
+from src.app.config import StrategyConfig
+from src.app.models import Direction, Inventory, OrderBook, SwapQuote
 
 
 class FakeUniswap:

@@ -1,10 +1,10 @@
 from datetime import datetime, timezone
 from decimal import Decimal
 
-from scr.app.models import (
+from src.app.models import (
     Candidate, Direction, OptimizationResult, OrderBook, PoolState,
 )
-from scr.app.storage import ResearchStore
+from src.app.storage import ResearchStore
 
 
 def test_records_observations_candidates_and_signals(tmp_path):
