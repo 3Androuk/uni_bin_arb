@@ -1,0 +1,71 @@
+[ethereum]
+rpc_url = "${ETHEREUM_RPC_URL}"
+ws_url = "${ALCHEMY_WS_URL}"
+chain_id = 1
+confirmation_blocks = 0
+
+[uniswap]
+pool_address = "0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640"
+quoter_v2_address = "0x61fFE014bA17989E743c5F6cB21bF9697530B21e"
+token0_address = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+token1_address = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+token0_symbol = "USDC"
+token1_symbol = "WETH"
+token0_decimals = 6
+token1_decimals = 18
+pool_fee = 500
+
+[binance]
+symbol = "ETHUSDC"
+rest_base_url = "https://data-api.binance.vision"
+account_base_url = "https://api.binance.com"
+depth_limit = 100
+fallback_taker_fee_bps = "10"
+api_key_env = "BINANCE_API_KEY"
+api_secret_env = "BINANCE_API_SECRET"
+
+[gas]
+quote_gas_multiplier = "1.20"
+router_overhead_gas = 45000
+base_fee_multiplier = "1.20"
+fallback_priority_fee_gwei = "1.5"
+
+[strategy]
+min_quantity_eth = "0.05"
+max_quantity_eth = "10"
+quantity_steps = 30
+grid = "geometric"
+quote_workers = 8
+search_mode = "adaptive"
+coarse_quantity_steps = 7
+refinement_steps = 5
+refinement_rounds = 2
+minimum_profit_usdc = "0.10"
+minimum_profit_bps = "0"
+rebalancing_bps = "2.0"
+rebalancing_fixed_usdc = "0"
+
+[inventory]
+uniswap_usdc = "100000"
+uniswap_weth = "50"
+uniswap_native_eth = "1"
+binance_usdc = "100000"
+binance_weth = "50"
+
+[monitor]
+database_path = "data/observations.sqlite3"
+poll_interval_seconds = 5
+max_market_age_seconds = 20
+latency_delays_ms = [0, 1000, 5000, 12000]
+
+[pending]
+enabled = false
+router_addresses = [
+  "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
+  "0xEf1c6E67703c7BD7107eed8303Fbe6EC2554BF6B",
+  "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD",
+  "0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af",
+]
+simulate_matching_swaps = true
+max_scenario_notional_usdc = "1000000"
+
