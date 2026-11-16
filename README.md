@@ -2,6 +2,19 @@
 
 A read-only, paper-trading research system for the Ethereum mainnet Uniswap V3 USDC/WETH 0.05% pool and Binance `ETHUSDC` spot market. It measures instantaneous CEX–DEX opportunities; it does **not** place Binance orders, sign Ethereum transactions, or claim that quoted profits are achievable.
 
+## Motivation
+
+The same asset can trade at different prices on a centralized exchange and a decentralized exchange because the two venues have different participants, liquidity, update mechanisms and execution constraints. A visible price difference is not automatically an arbitrage opportunity: the usable edge depends on trade size, Binance order-book depth and taker fees, Uniswap liquidity and price impact, Ethereum gas, inventory placement, rebalancing and the time required to complete both legs.
+
+This project was built to study the gap between a displayed CEX–DEX spread and a realistically costed paper opportunity. Its main questions are:
+
+- Does either trade direction remain profitable after all modeled costs?
+- What ETH quantity maximizes expected net profit instead of merely maximizing the raw spread?
+- How quickly do detected opportunities disappear as the two markets move?
+- Can provider-visible pending Uniswap transactions add useful conditional information about the next DEX state or subsequent CEX movement?
+
+The objective is measurement and falsifiable research, not a production trading claim. Storing every observation—including no-trade results—makes it possible to analyse selection bias, latency survival and model assumptions rather than reporting only attractive snapshots.
+
 ## What is implemented
 
 - Bidirectional adaptive optimization:
@@ -120,6 +133,22 @@ The generated notebook sources can be reproduced after editing `scripts/build_no
 ```bash
 python scripts/build_notebooks.py
 ```
+
+## Latency limitations and required expansion
+
+The present latency evaluation is an initial observation-based approximation, not a complete execution-latency model. A selected opportunity is repriced at the first monitor observation after each configured delay. With the default five-second polling interval, short requested horizons can therefore be measured several seconds late. The stored result indicates whether a comparable quote was still profitable, but it does not prove that both legs could have been submitted and filled at those prices.
+
+**A substantial latency expansion is still necessary before the paper results can be treated as execution-realistic.** At minimum, future work should add:
+
+- persistent Binance WebSocket depth with exchange event timestamps and local receipt timestamps;
+- block, pending-transaction and Quoter/RPC timing at subsecond resolution;
+- separate decision, signing, submission, propagation, inclusion and confirmation timestamps for the DEX leg;
+- CEX acknowledgement, queue position, partial-fill and adverse-selection assumptions;
+- explicit leg ordering and failure cases, including one leg filling while the other fails or becomes unprofitable;
+- distributions of RPC, builder and block-inclusion delays rather than a few fixed horizons;
+- replay or event-driven evaluation that uses the market state available at each simulated action time.
+
+Until that work is completed, latency survival should be interpreted as a diagnostic of how quickly marked opportunities decay—not as an estimate of achievable fill probability or realized P&L.
 
 ## Pending-transaction limitations
 
